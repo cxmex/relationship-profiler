@@ -78,7 +78,7 @@
     <div class="landing-card">
         <div class="tag">Research-backed</div>
         <h1>Discover Your Love DNA</h1>
-        <div class="sub">8-dimension relationship profile based on attachment theory (Bowlby), Gottman's 93.6% prediction research, Helen Fisher's neurochemistry, and polarity dynamics. 5 minutes.</div>
+        <div class="sub">54-question deep assessment across 8 dimensions. Based on attachment theory (Bowlby), Gottman's 93.6% prediction research, Helen Fisher's neurochemistry (15M+ respondents, fMRI-validated), polarity dynamics (Deida), and the SOI-R. Takes ~8 minutes.</div>
         <div class="dims-grid">
             <span class="dim-chip">Attachment Style</span>
             <span class="dim-chip">Polarity Energy</span>
@@ -97,7 +97,7 @@
 <div class="screen quiz-screen" id="quizScreen">
     <div class="quiz-header">
         <span class="section-label" id="sectionLabel">Attachment</span>
-        <span class="progress-text" id="progressText">0/32</span>
+        <span class="progress-text" id="progressText">0/54</span>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
     <div class="question-container" id="questionContainer"></div>
@@ -127,56 +127,111 @@ var FAMOUS = {
     'Jay-Z & Beyonce': { Attachment: 60, Polarity: 95, Fisher: 80, Sociosexual: 55, Communication: 70, Values: 80, Intimacy: 90, Independence: 75 },
     'John Lennon & Yoko Ono': { Attachment: 50, Polarity: 90, Fisher: 85, Sociosexual: 70, Communication: 65, Values: 90, Intimacy: 95, Independence: 40 },
     'Paul Newman & Joanne Woodward': { Attachment: 95, Polarity: 70, Fisher: 65, Sociosexual: 20, Communication: 85, Values: 90, Intimacy: 80, Independence: 60 },
+    'Ryan Reynolds & Blake Lively': { Attachment: 85, Polarity: 80, Fisher: 75, Sociosexual: 35, Communication: 90, Values: 85, Intimacy: 75, Independence: 70 },
+    'David Bowie & Iman': { Attachment: 70, Polarity: 85, Fisher: 90, Sociosexual: 60, Communication: 75, Values: 80, Intimacy: 90, Independence: 80 },
+    'Frida Kahlo & Diego Rivera': { Attachment: 35, Polarity: 95, Fisher: 90, Sociosexual: 85, Communication: 40, Values: 75, Intimacy: 95, Independence: 50 },
+    'Tim & Faith (McGraw & Hill)': { Attachment: 80, Polarity: 70, Fisher: 55, Sociosexual: 25, Communication: 80, Values: 95, Intimacy: 75, Independence: 55 },
 };
 
 var sections = [
-    { name: 'Attachment Style', dim: 'Attachment', emoji: '&#128149;', desc: 'How you bond and what triggers your anxiety or avoidance', items: [
+    { name: 'Attachment Style', dim: 'Attachment', emoji: '&#128149;', desc: 'How you bond, what triggers anxiety or avoidance (Bowlby/Ainsworth)', items: [
+        // Secure indicators
         { text: 'I find it easy to get close to others and trust them.' },
         { text: 'I rarely worry that my partner will leave me.' },
-        { text: 'When my partner needs space, I can give it without feeling anxious.' },
+        // Anxious indicators (reverse scored in interpretation)
+        { text: 'When my partner doesn\'t text back quickly, I feel anxious and check my phone repeatedly.' },
+        { text: 'I need frequent reassurance that my partner loves me.' },
+        // Avoidant indicators (reverse scored)
+        { text: 'When things get emotionally intense, my instinct is to pull away.' },
+        { text: 'I feel uncomfortable when a partner wants to be very close emotionally.' },
+        // Earned security
         { text: 'I can express my needs in relationships without fear of rejection.' },
+        { text: 'When my partner is upset, I can stay present without shutting down or panicking.' },
     ]},
-    { name: 'Polarity Energy', dim: 'Polarity', emoji: '&#9889;', desc: 'Your assertive-receptive spectrum and sexual chemistry dynamics', items: [
-        { text: 'I naturally take the lead in romantic situations.' },
-        { text: 'I am attracted to partners who have a very different energy than mine.' },
-        { text: 'Sexual tension and "chemistry" are essential for me in relationships.' },
-        { text: 'I enjoy the dynamic of pursuing or being pursued.' },
+    { name: 'Polarity Energy', dim: 'Polarity', emoji: '&#9889;', desc: 'Your assertive-receptive spectrum and sexual chemistry (Deida/Taoist)', items: [
+        // Assertive pole
+        { text: 'I naturally take the lead in romantic situations -- planning dates, initiating.' },
+        { text: 'I feel most alive when I\'m protecting, providing, or leading someone I love.' },
+        // Receptive pole
+        { text: 'I feel most attractive when I\'m relaxed, open, and receiving attention.' },
+        { text: 'I am drawn to partners who take charge and make me feel safe to let go.' },
+        // Polarity preference
+        { text: 'I am attracted to partners who have a very different energy than mine -- opposites.' },
+        { text: 'Sexual tension and "chemistry" are more important to me than compatibility on paper.' },
     ]},
-    { name: 'Fisher Temperament', dim: 'Fisher', emoji: '&#129514;', desc: 'Your neurochemical love style: Explorer, Builder, Director, or Negotiator', items: [
-        { text: 'I get bored easily and constantly seek new experiences in relationships.' },
-        { text: 'I make decisions about love with my head more than my heart.' },
-        { text: 'I am highly curious about my partner\'s inner world and psychology.' },
-        { text: 'I value spontaneity over routine in my relationships.' },
+    { name: 'Fisher Temperament', dim: 'Fisher', emoji: '&#129514;', desc: 'Your neurochemical love style (Helen Fisher, fMRI-validated)', items: [
+        // Explorer (dopamine)
+        { text: 'I get restless easily and constantly seek new experiences -- in life and love.' },
+        { text: 'I\'m drawn to adventurous, unpredictable partners over stable, predictable ones.' },
+        // Builder (serotonin)
+        { text: 'I value loyalty, tradition, and consistency in relationships above excitement.' },
+        { text: 'I feel most secure with clear routines, plans, and shared rituals with my partner.' },
+        // Director (testosterone)
+        { text: 'I make decisions about love analytically -- I weigh pros and cons, not just feelings.' },
+        { text: 'I respect a partner who challenges my ideas more than one who always agrees.' },
+        // Negotiator (estrogen/oxytocin)
+        { text: 'I am highly intuitive about my partner\'s emotions -- I sense things before they say them.' },
+        { text: 'I see the big picture of a relationship and think about its deeper meaning and potential.' },
     ]},
-    { name: 'Sociosexual Orientation', dim: 'Sociosexual', emoji: '&#128171;', desc: 'Your approach to physical intimacy: committed vs exploratory', items: [
+    { name: 'Sociosexual Orientation', dim: 'Sociosexual', emoji: '&#128171;', desc: 'Your approach to physical intimacy (SOI-R validated instrument)', items: [
+        // Behavior
         { text: 'I can enjoy physical intimacy without deep emotional connection.' },
-        { text: 'I have had or would be comfortable with casual relationships.' },
-        { text: 'I believe physical chemistry should be tested early in dating.' },
-        { text: 'I separate emotional love from physical attraction naturally.' },
+        { text: 'I have had or would be comfortable with casual or short-term relationships.' },
+        // Attitude
+        { text: 'I believe physical chemistry should be tested early in dating, not saved for later.' },
+        { text: 'I think sex without love is perfectly fine between consenting adults.' },
+        // Desire
+        { text: 'I sometimes fantasize about people I\'ve just met or barely know.' },
+        { text: 'I find the idea of one sexual partner for life limiting rather than romantic.' },
     ]},
-    { name: 'Communication Style', dim: 'Communication', emoji: '&#128172;', desc: 'How you express love, handle conflict, and listen', items: [
-        { text: 'During disagreements, I stay calm and try to understand my partner\'s perspective.' },
-        { text: 'I express appreciation and affection to my partner regularly.' },
-        { text: 'I address relationship problems directly rather than avoiding them.' },
-        { text: 'I am a good listener -- my partner would say I really hear them.' },
+    { name: 'Communication Style', dim: 'Communication', emoji: '&#128172;', desc: 'How you handle conflict, express love, and listen (Gottman research)', items: [
+        // Anti-Horseman: vs Contempt
+        { text: 'During disagreements, I stay respectful even when I\'m angry -- I never belittle my partner.' },
+        { text: 'I express appreciation and gratitude to my partner at least once a day.' },
+        // Anti-Horseman: vs Stonewalling
+        { text: 'When conflict gets intense, I stay engaged rather than shutting down or walking away.' },
+        { text: 'I can take a break during a fight and come back to resolve it, rather than avoiding it forever.' },
+        // Anti-Horseman: vs Criticism
+        { text: 'I address specific behaviors rather than attacking my partner\'s character ("you did X" not "you always...").' },
+        { text: 'I start difficult conversations gently, not with accusations.' },
+        // Bids for connection
+        { text: 'When my partner tries to get my attention (a comment, a look, a touch), I usually respond and engage.' },
+        { text: 'I am a good listener -- my partner would say I really hear them, not just wait for my turn to talk.' },
     ]},
-    { name: 'Values Alignment', dim: 'Values', emoji: '&#128142;', desc: 'What matters most to you in a partner and in life', items: [
+    { name: 'Values Alignment', dim: 'Values', emoji: '&#128142;', desc: 'What matters most to you in a partner and life direction', items: [
+        // Core values
         { text: 'Shared values (political, spiritual, lifestyle) are essential for me in a partner.' },
-        { text: 'I need a partner who shares my vision for the future (family, career, lifestyle).' },
-        { text: 'Differences in core beliefs would be a dealbreaker for me.' },
-        { text: 'I actively discuss long-term goals early in relationships.' },
+        { text: 'I need a partner who shares my vision for the future -- family, career, where to live.' },
+        // Dealbreakers
+        { text: 'Differences in core beliefs (religion, politics, money) would be a dealbreaker for me.' },
+        { text: 'I actively discuss long-term goals early in dating to avoid wasting time.' },
+        // Financial
+        { text: 'How a partner handles money is as important to me as how they handle emotions.' },
+        // Family
+        { text: 'Agreement on whether and how to raise children is non-negotiable for me.' },
     ]},
     { name: 'Intimacy Depth', dim: 'Intimacy', emoji: '&#128156;', desc: 'Your capacity for emotional vulnerability and deep connection', items: [
-        { text: 'I am comfortable being emotionally vulnerable with my partner.' },
-        { text: 'I share my deepest fears and insecurities with people I love.' },
-        { text: 'I crave deep, soulful conversations more than surface-level interaction.' },
-        { text: 'I feel most loved when someone truly understands my inner world.' },
+        // Emotional vulnerability
+        { text: 'I am comfortable being emotionally vulnerable -- sharing my fears, shame, and insecurities.' },
+        { text: 'I can cry in front of my partner without feeling weak or embarrassed.' },
+        // Depth of connection
+        { text: 'I crave deep, soulful conversations more than fun surface-level interaction.' },
+        { text: 'I feel most loved when someone truly understands my inner world -- not just my surface.' },
+        // Physical intimacy depth
+        { text: 'Physical intimacy (not just sex -- touch, eye contact, presence) is how I feel most connected.' },
+        // Spiritual/transcendent
+        { text: 'I believe the deepest relationships involve a spiritual or transcendent dimension beyond the practical.' },
     ]},
-    { name: 'Independence', dim: 'Independence', emoji: '&#127754;', desc: 'How much personal space and autonomy you need in love', items: [
+    { name: 'Independence', dim: 'Independence', emoji: '&#127754;', desc: 'How much personal space and autonomy you need in love (Bowen differentiation)', items: [
+        // Autonomy needs
         { text: 'I need significant alone time to recharge, even in happy relationships.' },
-        { text: 'I maintain my own hobbies, friends, and identity independent of my partner.' },
-        { text: 'Too much togetherness makes me feel suffocated.' },
-        { text: 'I believe two whole people make better partners than two halves.' },
+        { text: 'I maintain my own hobbies, friends, and identity completely independent of my partner.' },
+        // Enmeshment risk
+        { text: 'Too much togetherness makes me feel suffocated -- I need breathing room.' },
+        { text: 'I can disagree with my partner without feeling like the relationship is threatened.' },
+        // Differentiation
+        { text: 'I believe two whole, independent people make better partners than two halves seeking completion.' },
+        { text: 'I can be emotionally close to my partner while still maintaining a clear sense of who I am.' },
     ]},
 ];
 
@@ -229,15 +284,20 @@ async function submitQuiz() {
     globalScores = scores;
     var sorted = Object.entries(scores).sort(function(a, b) { return b[1] - a[1]; });
 
-    // Determine archetype
-    var att = scores.Attachment || 50, pol = scores.Polarity || 50, ind = scores.Independence || 50, int_ = scores.Intimacy || 50;
-    var archKey;
-    if (att >= 70 && int_ >= 65) archKey = 'SecureConnector';
-    else if (pol >= 70 && scores.Fisher >= 65) archKey = 'PassionateExplorer';
-    else if (att >= 60 && scores.Values >= 70) archKey = 'DevotedBuilder';
-    else if (ind >= 70 && scores.Fisher >= 60) archKey = 'IndependentThinker';
-    else if (pol >= 65 && ind >= 60) archKey = 'MagneticLeader';
-    else archKey = 'NurturingEmpath';
+    // Determine archetype using weighted scoring
+    var att = scores.Attachment || 50, pol = scores.Polarity || 50, ind = scores.Independence || 50;
+    var int_ = scores.Intimacy || 50, fis = scores.Fisher || 50, val = scores.Values || 50;
+    var com = scores.Communication || 50, soc = scores.Sociosexual || 50;
+
+    var archScores = {
+        SecureConnector: att * 2 + com * 1.5 + int_ * 1.2 + val,
+        PassionateExplorer: pol * 2 + soc * 1.5 + fis * 1.2 + (100 - val) * 0.5,
+        DevotedBuilder: val * 2 + att * 1.5 + (100 - soc) * 1.2 + com,
+        IndependentThinker: ind * 2 + fis * 1.5 + (100 - int_) * 0.8 + (100 - att) * 0.5,
+        MagneticLeader: pol * 2 + ind * 1.2 + (100 - att) * 0.5 + fis,
+        NurturingEmpath: int_ * 2 + com * 1.5 + (100 - ind) * 1.2 + att
+    };
+    var archKey = Object.entries(archScores).sort(function(a,b) { return b[1] - a[1]; })[0][0];
 
     // Famous match
     var bestMatch = '', bestDist = Infinity;
@@ -269,16 +329,40 @@ function showResults(scores, sorted, archKey, famousMatch) {
     var polScore = scores.Polarity || 50;
     var polType = polScore >= 70 ? 'High Polarity (Assertive)' : (polScore >= 40 ? 'Balanced' : 'Low Polarity (Receptive)');
 
-    var shareText = "I'm " + arch.name + "! My attachment style is " + attStyle + ". What's your Love DNA? ";
+    // Fisher temperament insight
+    var fisScore = scores.Fisher || 50;
+    var fisType, fisInsight;
+    if (fisScore >= 75) { fisType = 'Explorer (Dopamine)'; fisInsight = 'You crave novelty, adventure, and unpredictability in love. You fall fast and need constant stimulation. Best match: another Explorer for adventure, or a Builder for grounding.'; }
+    else if (fisScore >= 55) { fisType = 'Director (Testosterone)'; fisInsight = 'You approach love analytically. You respect competence and challenge. Best match: a Negotiator who brings empathy and intuition to your directness.'; }
+    else if (fisScore >= 40) { fisType = 'Negotiator (Estrogen/Oxytocin)'; fisInsight = 'You are deeply intuitive and see the big picture of relationships. You sense emotions before they are spoken. Best match: a Director who brings decisiveness to your depth.'; }
+    else { fisType = 'Builder (Serotonin)'; fisInsight = 'You value loyalty, tradition, and steady commitment. Routines and shared rituals ground your love. Best match: another Builder for stability, or an Explorer if you want growth.'; }
+
+    // Sociosexual insight
+    var socScore = scores.Sociosexual || 50;
+    var socType = socScore >= 70 ? 'Unrestricted' : (socScore >= 40 ? 'Moderate' : 'Restricted');
+    var socInsight = socScore >= 70 ? 'You separate physical attraction from emotional bonding naturally. Casual intimacy is comfortable for you. Critical: if your partner is Restricted, this mismatch predicts conflict (SOI-R research).' :
+        (socScore >= 40 ? 'You need some emotional connection for physical intimacy but you are flexible. You adapt to your partner\'s pace.' :
+        'You strongly link physical intimacy with emotional commitment. Casual relationships feel wrong to you. Critical: if your partner is Unrestricted, discuss expectations early.');
+
+    // Communication (Gottman) insight
+    var comScore = scores.Communication || 50;
+    var comInsight = comScore >= 75 ? 'Strong communicator. You likely maintain the 5:1 positive-to-negative ratio that Gottman found predicts lasting relationships. You turn toward your partner\'s bids for connection.' :
+        (comScore >= 55 ? 'Decent communication but room to grow. Focus on responding to your partner\'s bids for connection (Gottman: couples who "turn toward" 86% of bids stay together; those at 33% divorce).' :
+        'Communication is your growth area. Watch for the Four Horsemen: contempt, criticism, stonewalling, defensiveness. These predict divorce with 93.6% accuracy. The antidotes are learnable.');
+
+    var shareText = "I'm " + arch.name + "! " + attStyle + " attachment, " + fisType + ", " + polType + ". What's your Love DNA? ";
 
     var container = document.getElementById('resultsContainer');
     container.innerHTML =
         '<div class="section-card"><div class="archetype-header"><div class="archetype-emoji">' + arch.emoji + '</div><div class="archetype-title" style="color:' + arch.color + '">' + arch.name + '</div><div class="archetype-quote">' + arch.desc + '</div></div></div>' +
         '<div class="section-card"><h2>Your Love DNA</h2><div class="radar-wrap">' + radarSVG + '</div>' + dimBarsHTML + '</div>' +
-        '<div class="section-card"><h2>Key Insights</h2>' +
-            '<div class="insight-box"><h4>Attachment: ' + attStyle + ' (' + attScore + '%)</h4><p>' + attInsight + '</p></div>' +
+        '<div class="section-card"><h2>Deep Insights</h2>' +
+            '<div class="insight-box"><h4>Attachment: ' + attStyle + ' (' + attScore + '%)</h4><p>' + attInsight + '</p><p style="font-size:0.75rem;color:#64748b;margin-top:4px;">Research: 30% of adults change attachment over 4-6 years. Earned security is possible through corrective relational experiences (Bowlby/Main).</p></div>' +
             '<div class="insight-box"><h4>Polarity: ' + polType + ' (' + polScore + '%)</h4><p>' + (polScore >= 70 ? 'You bring strong assertive energy. You are most attracted to receptive, flowing partners. The tension between your energies creates chemistry.' : (polScore >= 40 ? 'You can adapt between assertive and receptive roles. Flexible but may lack the strong polarity that creates intense chemistry.' : 'You bring receptive, flowing energy. You are most attracted to assertive, grounded partners who make you feel safe to surrender.')) + '</p></div>' +
-            '<div class="insight-box"><h4>Famous Match: ' + famousMatch + '</h4><p>Your love profile is most similar to the relationship dynamic of ' + famousMatch + '.</p></div>' +
+            '<div class="insight-box"><h4>Fisher Type: ' + fisType + ' (' + fisScore + '%)</h4><p>' + fisInsight + '</p><p style="font-size:0.75rem;color:#64748b;margin-top:4px;">Based on Helen Fisher\'s fMRI-validated research (15M+ respondents, 40 countries).</p></div>' +
+            '<div class="insight-box"><h4>Sociosexual: ' + socType + ' (' + socScore + '%)</h4><p>' + socInsight + '</p></div>' +
+            '<div class="insight-box"><h4>Communication: Gottman Score (' + comScore + '%)</h4><p>' + comInsight + '</p></div>' +
+            '<div class="insight-box"><h4>Famous Match: ' + famousMatch + '</h4><p>Your love profile is most similar to the relationship dynamic of <strong>' + famousMatch + '</strong>.</p></div>' +
         '</div>' +
         '<div class="section-card ai-section"><h2>AI Love Analysis</h2><div class="ai-narrative" id="aiNarrative"><p class="loading">Generating your personalized love analysis...</p></div></div>' +
         '<div class="section-card"><h2>AI Relationship Coach</h2><div style="display:flex;gap:8px;"><input type="text" id="coachQuestion" placeholder="Ask about dating, attraction, communication, attachment..." style="flex:1;padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:0.9rem;outline:none;"><button onclick="askCoach()" style="padding:10px 20px;background:#ec4899;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Ask</button></div><div id="coachResponse" style="margin-top:12px;font-size:0.85rem;color:#94a3b8;line-height:1.6;"></div></div>' +
