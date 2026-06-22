@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Your Love DNA</title>
+    <meta property="og:title" content="Discover Your Love DNA">
+    <meta property="og:description" content="8-dimension relationship assessment based on attachment theory, Gottman research, Fisher neurochemistry, and polarity dynamics. Free.">
+    <meta property="og:image" content="https://ogforge.dev/api/v1?title=Discover+Your+Love+DNA&subtitle=Attachment+%E2%80%A2+Polarity+%E2%80%A2+Fisher+%E2%80%A2+Gottman+%E2%80%A2+8+dimensions&theme=dark&accent=ec4899">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+        .screen { display: none; min-height: 100vh; padding-top: 20px; }
+        .screen.active { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        .landing-card { background: #1e293b; border-radius: 16px; padding: 40px 32px; max-width: 520px; width: 100%; text-align: center; }
+        .landing-card .tag { display: inline-block; padding: 4px 12px; background: rgba(236,72,153,0.15); color: #ec4899; border-radius: 20px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+        .landing-card h1 { font-size: 1.8rem; margin-bottom: 8px; line-height: 1.2; }
+        .landing-card .sub { font-size: 0.9rem; color: #94a3b8; margin-bottom: 24px; line-height: 1.5; }
+        .dims-grid { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 24px; }
+        .dim-chip { padding: 5px 12px; background: #0f172a; border: 1px solid #334155; border-radius: 20px; font-size: 0.7rem; color: #94a3b8; }
+        .btn-primary { padding: 16px 40px; border-radius: 12px; border: none; background: #ec4899; color: white; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .btn-primary:hover { background: #db2777; transform: translateY(-2px); }
+        .fine-print { font-size: 0.75rem; color: #475569; margin-top: 16px; }
+        .quiz-screen { padding: 20px; padding-top: 0; }
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; max-width: 600px; margin: 0 auto; }
+        .section-label { font-size: 0.85rem; color: #ec4899; font-weight: 600; }
+        .progress-text { font-size: 0.85rem; color: #64748b; }
+        .progress-bar { max-width: 600px; margin: 0 auto; height: 4px; background: #334155; border-radius: 2px; }
+        .progress-fill { height: 100%; background: #ec4899; border-radius: 2px; transition: width 0.3s; }
+        .question-container { max-width: 600px; margin: 20px auto; }
+        .section-divider { padding: 16px 0 8px; }
+        .section-divider h3 { color: #ec4899; font-size: 1rem; }
+        .section-divider p { color: #64748b; font-size: 0.8rem; }
+        .q-card { background: #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+        .q-card .q-text { font-size: 0.9rem; margin-bottom: 10px; line-height: 1.4; }
+        .likert { display: flex; gap: 6px; justify-content: center; }
+        .likert label { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 8px 4px; border-radius: 8px; transition: all 0.15s; min-width: 48px; }
+        .likert label:hover { background: rgba(236,72,153,0.1); }
+        .likert input { display: none; }
+        .likert .circle { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #475569; transition: all 0.15s; }
+        .likert input:checked + .circle { background: #ec4899; border-color: #ec4899; }
+        .likert .label-text { font-size: 0.6rem; color: #64748b; text-align: center; }
+        .submit-area { text-align: center; padding: 24px 20px 40px; }
+        .results-container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .section-card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+        .section-card h2 { font-size: 1.1rem; margin-bottom: 12px; color: #ec4899; }
+        .archetype-header { text-align: center; padding: 16px 0; }
+        .archetype-emoji { font-size: 3rem; }
+        .archetype-title { font-size: 1.3rem; font-weight: 700; margin: 8px 0; }
+        .archetype-quote { font-style: italic; color: #94a3b8; font-size: 0.9rem; }
+        .dim-bar-container { margin: 8px 0; }
+        .dim-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px; }
+        .dim-label .name { color: #94a3b8; }
+        .dim-label .score { font-weight: 600; }
+        .dim-bar-bg { height: 8px; background: #334155; border-radius: 4px; }
+        .dim-bar { height: 100%; border-radius: 4px; transition: width 0.8s; width: 0; }
+        .radar-wrap { display: flex; justify-content: center; margin: 12px 0; }
+        .radar-svg { width: 280px; height: 280px; }
+        .radar-svg .grid { fill: none; stroke: #334155; stroke-width: 0.5; }
+        .radar-svg .data-area { fill: rgba(236,72,153,0.2); stroke: #ec4899; stroke-width: 2; }
+        .radar-svg .dot { fill: #ec4899; }
+        .radar-svg .label-text { fill: #94a3b8; font-size: 8px; font-family: sans-serif; }
+        .radar-svg .score-text { fill: #ec4899; font-size: 8px; font-weight: 700; font-family: sans-serif; }
+        .radar-svg .axis { stroke: #334155; stroke-width: 0.5; }
+        .ai-narrative { font-size: 0.85rem; color: #94a3b8; line-height: 1.7; white-space: pre-wrap; }
+        .loading { color: #64748b; font-style: italic; }
+        .insight-box { background: #0f172a; border-radius: 8px; padding: 14px; margin: 8px 0; border-left: 3px solid #ec4899; }
+        .insight-box h4 { color: #ec4899; font-size: 0.85rem; margin-bottom: 4px; }
+        .insight-box p { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
+        @media (max-width: 600px) { .landing-card { padding: 28px 20px; } .landing-card h1 { font-size: 1.4rem; } .likert label { min-width: 40px; } .likert .circle { width: 24px; height: 24px; } }
+    </style>
+</head>
+<body>
+
+<div class="screen active" id="landingScreen">
+    <div class="landing-card">
+        <div class="tag">Research-backed</div>
+        <h1>Discover Your Love DNA</h1>
+        <div class="sub">8-dimension relationship profile based on attachment theory (Bowlby), Gottman's 93.6% prediction research, Helen Fisher's neurochemistry, and polarity dynamics. 5 minutes.</div>
+        <div class="dims-grid">
+            <span class="dim-chip">Attachment Style</span>
+            <span class="dim-chip">Polarity Energy</span>
+            <span class="dim-chip">Fisher Temperament</span>
+            <span class="dim-chip">Sociosexual Style</span>
+            <span class="dim-chip">Communication</span>
+            <span class="dim-chip">Values</span>
+            <span class="dim-chip">Intimacy</span>
+            <span class="dim-chip">Independence</span>
+        </div>
+        <button class="btn-primary" onclick="startQuiz()">Discover My Love DNA</button>
+        <p class="fine-print">No registration. Instant results. Share with your partner to compare.</p>
+    </div>
+</div>
+
+<div class="screen quiz-screen" id="quizScreen">
+    <div class="quiz-header">
+        <span class="section-label" id="sectionLabel">Attachment</span>
+        <span class="progress-text" id="progressText">0/32</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="question-container" id="questionContainer"></div>
+    <div class="submit-area" id="submitArea" style="display:none;">
+        <button class="btn-primary" onclick="submitQuiz()">See My Love DNA</button>
+    </div>
+</div>
+
+<div class="screen" id="resultsScreen">
+    <div class="results-container" id="resultsContainer"></div>
+</div>
+
+<script>
+var ARCHETYPES = {
+    SecureConnector: { name: 'The Secure Connector', emoji: '&#128149;', color: '#22c55e', desc: 'You form deep, stable bonds with ease. You give space without anxiety and closeness without losing yourself. Partners feel safe with you.' },
+    PassionateExplorer: { name: 'The Passionate Explorer', emoji: '&#128293;', color: '#ef4444', desc: 'You bring intensity, chemistry, and adventure. You crave novelty and depth equally. Relationships with you are never boring -- but sometimes turbulent.' },
+    DevotedBuilder: { name: 'The Devoted Builder', emoji: '&#127793;', color: '#3b82f6', desc: 'You build relationships brick by brick. Loyalty, consistency, and steadiness define you. You are the person people can count on -- always.' },
+    IndependentThinker: { name: 'The Independent Thinker', emoji: '&#129504;', color: '#a78bfa', desc: 'You need space to love fully. You approach relationships analytically and value depth over frequency. When you commit, it is deliberate and complete.' },
+    MagneticLeader: { name: 'The Magnetic Leader', emoji: '&#9889;', color: '#f59e0b', desc: 'You lead in love as in life. High polarity, natural assertiveness, and protective energy. You attract partners who appreciate direction and strength.' },
+    NurturingEmpath: { name: 'The Nurturing Empath', emoji: '&#127800;', color: '#ec4899', desc: 'You feel everything deeply. Empathy, intuition, and emotional attunement are your superpowers. Partners feel truly seen and understood by you.' },
+};
+
+var DIM_COLORS = { Attachment: '#22c55e', Polarity: '#ef4444', Fisher: '#f59e0b', Sociosexual: '#a78bfa', Communication: '#3b82f6', Values: '#ec4899', Intimacy: '#f97316', Independence: '#06b6d4' };
+
+var FAMOUS = {
+    'Barack & Michelle Obama': { Attachment: 90, Polarity: 75, Fisher: 70, Sociosexual: 30, Communication: 95, Values: 95, Intimacy: 85, Independence: 65 },
+    'Jay-Z & Beyonce': { Attachment: 60, Polarity: 95, Fisher: 80, Sociosexual: 55, Communication: 70, Values: 80, Intimacy: 90, Independence: 75 },
+    'John Lennon & Yoko Ono': { Attachment: 50, Polarity: 90, Fisher: 85, Sociosexual: 70, Communication: 65, Values: 90, Intimacy: 95, Independence: 40 },
+    'Paul Newman & Joanne Woodward': { Attachment: 95, Polarity: 70, Fisher: 65, Sociosexual: 20, Communication: 85, Values: 90, Intimacy: 80, Independence: 60 },
+};
+
+var sections = [
+    { name: 'Attachment Style', dim: 'Attachment', emoji: '&#128149;', desc: 'How you bond and what triggers your anxiety or avoidance', items: [
+        { text: 'I find it easy to get close to others and trust them.' },
+        { text: 'I rarely worry that my partner will leave me.' },
+        { text: 'When my partner needs space, I can give it without feeling anxious.' },
+        { text: 'I can express my needs in relationships without fear of rejection.' },
+    ]},
+    { name: 'Polarity Energy', dim: 'Polarity', emoji: '&#9889;', desc: 'Your assertive-receptive spectrum and sexual chemistry dynamics', items: [
+        { text: 'I naturally take the lead in romantic situations.' },
+        { text: 'I am attracted to partners who have a very different energy than mine.' },
+        { text: 'Sexual tension and "chemistry" are essential for me in relationships.' },
+        { text: 'I enjoy the dynamic of pursuing or being pursued.' },
+    ]},
+    { name: 'Fisher Temperament', dim: 'Fisher', emoji: '&#129514;', desc: 'Your neurochemical love style: Explorer, Builder, Director, or Negotiator', items: [
+        { text: 'I get bored easily and constantly seek new experiences in relationships.' },
+        { text: 'I make decisions about love with my head more than my heart.' },
+        { text: 'I am highly curious about my partner\'s inner world and psychology.' },
+        { text: 'I value spontaneity over routine in my relationships.' },
+    ]},
+    { name: 'Sociosexual Orientation', dim: 'Sociosexual', emoji: '&#128171;', desc: 'Your approach to physical intimacy: committed vs exploratory', items: [
+        { text: 'I can enjoy physical intimacy without deep emotional connection.' },
+        { text: 'I have had or would be comfortable with casual relationships.' },
+        { text: 'I believe physical chemistry should be tested early in dating.' },
+        { text: 'I separate emotional love from physical attraction naturally.' },
+    ]},
+    { name: 'Communication Style', dim: 'Communication', emoji: '&#128172;', desc: 'How you express love, handle conflict, and listen', items: [
+        { text: 'During disagreements, I stay calm and try to understand my partner\'s perspective.' },
+        { text: 'I express appreciation and affection to my partner regularly.' },
+        { text: 'I address relationship problems directly rather than avoiding them.' },
+        { text: 'I am a good listener -- my partner would say I really hear them.' },
+    ]},
+    { name: 'Values Alignment', dim: 'Values', emoji: '&#128142;', desc: 'What matters most to you in a partner and in life', items: [
+        { text: 'Shared values (political, spiritual, lifestyle) are essential for me in a partner.' },
+        { text: 'I need a partner who shares my vision for the future (family, career, lifestyle).' },
+        { text: 'Differences in core beliefs would be a dealbreaker for me.' },
+        { text: 'I actively discuss long-term goals early in relationships.' },
+    ]},
+    { name: 'Intimacy Depth', dim: 'Intimacy', emoji: '&#128156;', desc: 'Your capacity for emotional vulnerability and deep connection', items: [
+        { text: 'I am comfortable being emotionally vulnerable with my partner.' },
+        { text: 'I share my deepest fears and insecurities with people I love.' },
+        { text: 'I crave deep, soulful conversations more than surface-level interaction.' },
+        { text: 'I feel most loved when someone truly understands my inner world.' },
+    ]},
+    { name: 'Independence', dim: 'Independence', emoji: '&#127754;', desc: 'How much personal space and autonomy you need in love', items: [
+        { text: 'I need significant alone time to recharge, even in happy relationships.' },
+        { text: 'I maintain my own hobbies, friends, and identity independent of my partner.' },
+        { text: 'Too much togetherness makes me feel suffocated.' },
+        { text: 'I believe two whole people make better partners than two halves.' },
+    ]},
+];
+
+var allItems = [];
+sections.forEach(function(s) { s.items.forEach(function(item) { allItems.push({ text: item.text, dim: s.dim }); }); });
+
+var userEmail = '', answers = {}, globalScores = {};
+
+function startQuiz() {
+    userEmail = 'anonymous_' + Date.now();
+    document.getElementById('landingScreen').classList.remove('active');
+    var qs = document.getElementById('quizScreen'); qs.classList.add('active'); qs.style.display = 'block';
+    renderQuestions();
+}
+
+function renderQuestions() {
+    var container = document.getElementById('questionContainer'), html = '', gi = 0;
+    sections.forEach(function(section) {
+        html += '<div class="section-divider"><h3>' + section.emoji + ' ' + section.name + '</h3><p>' + section.desc + '</p></div>';
+        section.items.forEach(function(item) {
+            html += '<div class="q-card"><div class="q-text">' + item.text + '</div><div class="likert">';
+            ['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'].forEach(function(l, v) {
+                html += '<label><input type="radio" name="q' + gi + '" value="' + (v+1) + '" onchange="recordAnswer(' + gi + ',' + (v+1) + ')"><span class="circle"></span><span class="label-text">' + l + '</span></label>';
+            });
+            html += '</div></div>'; gi++;
+        });
+    });
+    container.innerHTML = html;
+}
+
+function recordAnswer(idx, val) {
+    answers[idx] = val;
+    var answered = Object.keys(answers).length;
+    document.getElementById('progressText').textContent = answered + '/' + allItems.length;
+    document.getElementById('progressFill').style.width = (answered / allItems.length * 100) + '%';
+    var si = Math.floor(idx / 4);
+    if (si < sections.length) document.getElementById('sectionLabel').textContent = sections[si].name;
+    if (answered >= allItems.length) document.getElementById('submitArea').style.display = 'block';
+}
+
+function scoreSection(dim) {
+    var sum = 0, count = 0, gi = 0;
+    sections.forEach(function(s) { s.items.forEach(function() { if (s.dim === dim && answers[gi]) { sum += answers[gi]; count++; } gi++; }); });
+    return count > 0 ? Math.round((sum / (count * 5)) * 100) : 0;
+}
+
+async function submitQuiz() {
+    if (Object.keys(answers).length < allItems.length) { alert('Please answer all questions.'); return; }
+    var scores = {}; sections.forEach(function(s) { scores[s.dim] = scoreSection(s.dim); });
+    globalScores = scores;
+    var sorted = Object.entries(scores).sort(function(a, b) { return b[1] - a[1]; });
+
+    // Determine archetype
+    var att = scores.Attachment || 50, pol = scores.Polarity || 50, ind = scores.Independence || 50, int_ = scores.Intimacy || 50;
+    var archKey;
+    if (att >= 70 && int_ >= 65) archKey = 'SecureConnector';
+    else if (pol >= 70 && scores.Fisher >= 65) archKey = 'PassionateExplorer';
+    else if (att >= 60 && scores.Values >= 70) archKey = 'DevotedBuilder';
+    else if (ind >= 70 && scores.Fisher >= 60) archKey = 'IndependentThinker';
+    else if (pol >= 65 && ind >= 60) archKey = 'MagneticLeader';
+    else archKey = 'NurturingEmpath';
+
+    // Famous match
+    var bestMatch = '', bestDist = Infinity;
+    for (var name in FAMOUS) { var dist = 0; for (var d in scores) { dist += Math.pow((scores[d]||0) - (FAMOUS[name][d]||0), 2); } if (dist < bestDist) { bestDist = dist; bestMatch = name; } }
+
+    var payload = { email: userEmail, scores: scores, archetype: archKey, famous_match: bestMatch, timestamp: new Date().toISOString() };
+    try { await fetch('/api/relationship-profile', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) }); } catch(e) {}
+
+    showResults(scores, sorted, archKey, bestMatch);
+}
+
+function showResults(scores, sorted, archKey, famousMatch) {
+    document.getElementById('quizScreen').classList.remove('active'); document.getElementById('quizScreen').style.display = 'none';
+    var rs = document.getElementById('resultsScreen'); rs.classList.add('active'); rs.style.display = 'flex';
+    var arch = ARCHETYPES[archKey];
+    var dimBarsHTML = '';
+    sorted.forEach(function(e) {
+        dimBarsHTML += '<div class="dim-bar-container"><div class="dim-label"><span class="name">' + e[0] + '</span><span class="score" style="color:' + DIM_COLORS[e[0]] + '">' + e[1] + '%</span></div><div class="dim-bar-bg"><div class="dim-bar" data-score="' + e[1] + '" style="background:' + DIM_COLORS[e[0]] + ';"></div></div></div>';
+    });
+
+    var radarSVG = buildRadar(scores);
+
+    // Attachment insight
+    var attScore = scores.Attachment || 50;
+    var attStyle = attScore >= 75 ? 'Secure' : (attScore >= 55 ? 'Secure-leaning' : (attScore >= 40 ? 'Anxious-leaning' : 'Avoidant-leaning'));
+    var attInsight = attScore >= 75 ? 'You form healthy bonds with ease. Partners feel safe and trusted around you.' : (attScore >= 55 ? 'Generally secure, but stress can trigger anxiety or withdrawal.' : (attScore >= 40 ? 'You may experience relationship anxiety -- fear of abandonment or need for constant reassurance.' : 'You may pull away when things get close. Independence feels safer than vulnerability.'));
+
+    // Polarity insight
+    var polScore = scores.Polarity || 50;
+    var polType = polScore >= 70 ? 'High Polarity (Assertive)' : (polScore >= 40 ? 'Balanced' : 'Low Polarity (Receptive)');
+
+    var shareText = "I'm " + arch.name + "! My attachment style is " + attStyle + ". What's your Love DNA? ";
+
+    var container = document.getElementById('resultsContainer');
+    container.innerHTML =
+        '<div class="section-card"><div class="archetype-header"><div class="archetype-emoji">' + arch.emoji + '</div><div class="archetype-title" style="color:' + arch.color + '">' + arch.name + '</div><div class="archetype-quote">' + arch.desc + '</div></div></div>' +
+        '<div class="section-card"><h2>Your Love DNA</h2><div class="radar-wrap">' + radarSVG + '</div>' + dimBarsHTML + '</div>' +
+        '<div class="section-card"><h2>Key Insights</h2>' +
+            '<div class="insight-box"><h4>Attachment: ' + attStyle + ' (' + attScore + '%)</h4><p>' + attInsight + '</p></div>' +
+            '<div class="insight-box"><h4>Polarity: ' + polType + ' (' + polScore + '%)</h4><p>' + (polScore >= 70 ? 'You bring strong assertive energy. You are most attracted to receptive, flowing partners. The tension between your energies creates chemistry.' : (polScore >= 40 ? 'You can adapt between assertive and receptive roles. Flexible but may lack the strong polarity that creates intense chemistry.' : 'You bring receptive, flowing energy. You are most attracted to assertive, grounded partners who make you feel safe to surrender.')) + '</p></div>' +
+            '<div class="insight-box"><h4>Famous Match: ' + famousMatch + '</h4><p>Your love profile is most similar to the relationship dynamic of ' + famousMatch + '.</p></div>' +
+        '</div>' +
+        '<div class="section-card ai-section"><h2>AI Love Analysis</h2><div class="ai-narrative" id="aiNarrative"><p class="loading">Generating your personalized love analysis...</p></div></div>' +
+        '<div class="section-card"><h2>AI Relationship Coach</h2><div style="display:flex;gap:8px;"><input type="text" id="coachQuestion" placeholder="Ask about dating, attraction, communication, attachment..." style="flex:1;padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:0.9rem;outline:none;"><button onclick="askCoach()" style="padding:10px 20px;background:#ec4899;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Ask</button></div><div id="coachResponse" style="margin-top:12px;font-size:0.85rem;color:#94a3b8;line-height:1.6;"></div></div>' +
+        '<div class="section-card"><div style="text-align:center;"><p style="font-size:0.95rem;color:#94a3b8;margin-bottom:12px;">Share your Love DNA</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;"><a href="https://wa.me/?text=' + encodeURIComponent(shareText + window.location.origin) + '" target="_blank" style="padding:10px 20px;background:#25D366;color:white;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem;">WhatsApp</a><button onclick="navigator.clipboard.writeText(\'' + shareText.replace(/'/g,"\\'") + '\'+window.location.origin).then(function(){this.textContent=\'Copied!\'}.bind(this))" style="padding:10px 20px;background:#334155;color:#e2e8f0;border:1px solid #ec4899;border-radius:8px;font-weight:600;font-size:0.85rem;cursor:pointer;">Copy link</button></div></div></div>' +
+        '<div class="section-card"><div style="text-align:center;"><p style="font-size:1rem;font-weight:600;margin-bottom:4px;">Save your results</p><p style="font-size:0.8rem;color:#94a3b8;margin-bottom:12px;">Get your full love profile + compare with a partner</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;"><input type="email" id="postEmail" placeholder="you@email.com" style="padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:0.9rem;width:200px;outline:none;"><button onclick="saveEmail()" style="padding:10px 20px;background:#ec4899;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Save</button></div><div id="saveMsg" style="font-size:0.85rem;color:#22c55e;margin-top:8px;display:none;"></div></div></div>';
+
+    setTimeout(function() { document.querySelectorAll('.dim-bar').forEach(function(b) { b.style.width = b.dataset.score + '%'; }); }, 300);
+    fetch('/api/ai/narrative', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({scores:scores}) })
+        .then(function(r) { return r.json(); })
+        .then(function(d) { document.getElementById('aiNarrative').innerHTML = '<p>' + (d.narrative||'AI unavailable.').replace(/\n/g,'</p><p>') + '</p>'; })
+        .catch(function() { document.getElementById('aiNarrative').innerHTML = '<p>AI analysis unavailable.</p>'; });
+}
+
+async function askCoach() {
+    var q = document.getElementById('coachQuestion').value.trim(); if (!q) return;
+    document.getElementById('coachResponse').innerHTML = '<em>Thinking...</em>';
+    try { var r = await fetch('/api/ai/coach', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({scores:globalScores,question:q}) }); var d = await r.json(); document.getElementById('coachResponse').textContent = d.answer||'No response.'; } catch(e) { document.getElementById('coachResponse').textContent = 'Coach unavailable.'; }
+}
+
+async function saveEmail() {
+    var email = document.getElementById('postEmail').value.trim().toLowerCase();
+    if (!email||!email.includes('@')) { alert('Enter a valid email'); return; }
+    try { await fetch('/api/relationship-profile', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:email,scores:globalScores,timestamp:new Date().toISOString()}) }); } catch(e) {}
+    document.getElementById('saveMsg').textContent = 'Results saved!';
+    document.getElementById('saveMsg').style.display = 'block';
+    document.getElementById('postEmail').disabled = true;
+}
+
+function buildRadar(scores) {
+    var dims = Object.keys(DIM_COLORS), n = dims.length, cx = 140, cy = 140, r = 100;
+    var sa = -Math.PI/2, st = (2*Math.PI)/n;
+    function pol(a,rad){return{x:cx+rad*Math.cos(a),y:cy+rad*Math.sin(a)};}
+    var gH='',aH='';
+    for(var ring=1;ring<=4;ring++){var rr=r*ring/4,pts=[];for(var i=0;i<n;i++){var p=pol(sa+i*st,rr);pts.push(p.x+','+p.y);}gH+='<polygon class="grid" points="'+pts.join(' ')+'"/>';}
+    for(var i=0;i<n;i++){var p=pol(sa+i*st,r);aH+='<line class="axis" x1="'+cx+'" y1="'+cy+'" x2="'+p.x+'" y2="'+p.y+'"/>';}
+    var dP=[],doH='';
+    dims.forEach(function(d,i){var a=sa+i*st,val=(scores[d]||0)/100*r,p=pol(a,val);dP.push(p.x+','+p.y);doH+='<circle class="dot" cx="'+p.x+'" cy="'+p.y+'" r="3"/>';});
+    var dataH='<polygon class="data-area" points="'+dP.join(' ')+'"/>';
+    var lH='';
+    dims.forEach(function(d,i){var a=sa+i*st,p=pol(a,r+20),anch='middle';if(p.x<cx-10)anch='end';else if(p.x>cx+10)anch='start';lH+='<text x="'+p.x+'" y="'+p.y+'" text-anchor="'+anch+'" dominant-baseline="central" class="label-text" fill="'+DIM_COLORS[d]+'">'+d+'</text>';lH+='<text x="'+p.x+'" y="'+(p.y+12)+'" text-anchor="'+anch+'" dominant-baseline="central" class="score-text">'+(scores[d]||0)+'%</text>';});
+    return '<svg class="radar-svg" viewBox="0 0 280 280">'+gH+aH+dataH+doH+lH+'</svg>';
+}
+</script>
+</body>
+</html>
