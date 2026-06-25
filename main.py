@@ -26,10 +26,15 @@ HEADERS = {
 }
 
 async def save_to_supabase(table, data):
-    if not SUPABASE_KEY: return {}
+    if not SUPABASE_KEY:
+        print(f"[REL] CRITICAL: SUPABASE_KEY not set! Data for {table} LOST: {json.dumps(data)[:200]}")
+        return {}
     async with httpx.AsyncClient() as c:
         r = await c.post(f"{SUPABASE_URL}/rest/v1/{table}", headers=HEADERS, json=data)
-        if r.status_code not in [200, 201]: print(f"Supabase error: {r.text}")
+        if r.status_code not in [200, 201]:
+            print(f"[REL] Supabase POST {table} FAILED ({r.status_code}): {r.text}")
+        else:
+            print(f"[REL] Saved to {table}: {data.get('email', 'anon')}")
         return r.json() if r.status_code in [200, 201] else {}
 
 VALID_DIMS = {"Attachment", "Polarity", "Fisher", "Sociosexual",
